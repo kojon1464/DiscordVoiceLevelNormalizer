@@ -1,0 +1,19 @@
+{
+  "name": "discordvoicelevelnormalizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "commands": "node deploy-commands.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/voice": "^0.16.0",
+    "discord.js": "^14.9.0",
+    "libsodium-wrappers": "^0.7.11"
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0"
+  }
+}
