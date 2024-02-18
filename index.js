@@ -53,12 +53,15 @@ if (process.platform === 'win32') {
 	});
 }
 
+// Handling closing of the application
 process.on('SIGINT', function() {
 	if (client.voiceConnection) {
 		client.voiceConnection.destroy();
 	}
 
+	client.destroy();
 	process.exit();
 });
 
+// Login bot to discord after application after initialziation completed
 client.login(token);
