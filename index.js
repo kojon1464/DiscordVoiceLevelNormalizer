@@ -2,7 +2,9 @@ const process = require('node:process');
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const { getVoiceConnections } = require('@discordjs/voice');
 const { token } = require('./config.json');
+
 
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
@@ -55,8 +57,10 @@ if (process.platform === 'win32') {
 
 // Handling closing of the application
 process.on('SIGINT', function() {
-	if (client.voiceConnection) {
-		client.voiceConnection.destroy();
+	const voiceConnections = getVoiceConnections();
+
+	if (voiceConnections) {
+		voiceConnections.forEach(connection => connection.destroy());
 	}
 
 	client.destroy();

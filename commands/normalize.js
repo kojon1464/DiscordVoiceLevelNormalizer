@@ -17,7 +17,6 @@ module.exports = {
 				selfDeaf: false,
 				selfMute: true,
 			});
-			interaction.client.voiceConnection = connection;
 
 			const receiver = connection.receiver;
 
