@@ -6,7 +6,6 @@ const { getVoiceConnections } = require('@discordjs/voice');
 const { token } = require('./config.json');
 
 
-
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
 
 client.commands = new Collection();
@@ -66,6 +65,11 @@ process.on('SIGINT', function() {
 	client.destroy();
 	process.exit();
 });
+
+// Calculating decibe diffrenca based on loudness ratio
+console.log(10 * Math.log2(0.5));
+// calcualing ludness ratio based on decivel difference
+console.log(Math.pow(2, 10 / 10));
 
 // Login bot to discord after application after initialziation completed
 client.login(token);

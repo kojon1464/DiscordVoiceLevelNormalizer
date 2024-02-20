@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { joinVoiceChannel, EndBehaviorType } = require('@discordjs/voice');
 const { OpusEncoder } = require('@discordjs/opus');
+const { dBThreshold, durationThreshold } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder().setName('normalize').setDescription('Start normalizing voice levels'),
@@ -31,6 +32,7 @@ module.exports = {
 				const encoder = new OpusEncoder(48000, 2);
 				let chunkLoudnessSumm = 0;
 				let chunkCount = 0;
+				let duration = 0;
 
 				audioStream.on('data', chunk => {
 					const decoded = encoder.decode(chunk);
@@ -48,7 +50,9 @@ module.exports = {
 					const loudness = Math.sqrt(sampleSquareSum / sampleCount);
 					const loudnessdB = 20 * Math.log10(loudness);
 
-					if (loudnessdB < 40) {
+					duration += decoded.length / 48000 / 4;
+
+					if (loudnessdB < dBThreshold) {
 						return;
 					}
 
@@ -59,8 +63,10 @@ module.exports = {
 				audioStream.once('end', () => {
 					const user = interaction.client.users.cache.get(userId);
 
-					// This is not corret mathematical average of whole message but it works in this use case
-					console.log('User ' + user.username + ' spoken with loudness (in dB): ' + 20 * Math.log10(chunkLoudnessSumm / chunkCount));
+					if (duration > durationThreshold && chunkCount > 0) {
+						// This is not corret mathematical average of whole message but it works in this use case
+						console.log('User ' + user.username + ' spoken with loudness (in dB): ' + 20 * Math.log10(chunkLoudnessSumm / chunkCount));
+					}
 				});
 			});
 
