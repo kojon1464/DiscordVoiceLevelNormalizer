@@ -31,9 +31,6 @@ module.exports = {
 				initializeVoiceProcessing(interaction, connection);
 			}
 
-			// TODO make so that user data is purged when user leves voice channel
-			// TODO make so that bot leaves voice channel when all users leave
-
 			await interaction.reply('Joined your voice channel');
 		}
 	},
@@ -111,7 +108,7 @@ function finishProcessingAudioStream(interaction, user, streamData) {
 
 		/** @type { LoudnessData } */
 		const loudnessData = interaction.client.loudnessData;
-		loudnessData.addMessageData(interaction.guildId, user.userId, LoudnessDb, streamData.duration);
+		loudnessData.addMessageData(interaction.guildId, user.id, LoudnessDb, streamData.duration);
 
 		console.log('User ' + user.username + ' spoken with loudness (in dB): ' + LoudnessDb);
 	}
