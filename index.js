@@ -66,10 +66,5 @@ process.on('SIGINT', function() {
 	process.exit();
 });
 
-// Calculating decibe diffrenca based on loudness ratio
-console.log(10 * Math.log2(0.5));
-// calcualing ludness ratio based on decivel difference
-console.log(Math.pow(2, 10 / 10));
-
 // Login bot to discord after application after initialziation completed
 client.login(token);

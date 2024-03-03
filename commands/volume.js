@@ -22,8 +22,13 @@ module.exports = {
 
 		usersMap.forEach((userData, userId) => {
 			const user = interaction.client.users.cache.get(userId);
+			const loudnessdB = userData.getAverageLoudness();
+			const difference = desiredLoudness - loudnessdB;
 
-			message = message + '\n Player ' + user.username + ' average loudness (db): ' + userData.getAverageLoudness();
+			// calcualing lodness ratio based on decivel difference
+			const volumeToSet = Math.pow(2, difference / 10) * 100;
+
+			message = message + '\n Average loudness: ' + loudnessdB.toFixed(1) + ' Volume to set: ' + volumeToSet.toFixed(0) + ' Username: ' + user.username;
 		});
 
 		await interaction.reply(message);
