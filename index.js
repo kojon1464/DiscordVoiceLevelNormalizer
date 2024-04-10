@@ -4,6 +4,7 @@ const path = require('node:path');
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const { getVoiceConnections } = require('@discordjs/voice');
 const { token } = require('./config.json');
+const { initializeHttpServer } = require('./http-server.js');
 
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
@@ -65,6 +66,9 @@ process.on('SIGINT', function() {
 	client.destroy();
 	process.exit();
 });
+
+// Initilize http server
+initializeHttpServer(client);
 
 // Login bot to discord after application after initialziation completed
 client.login(token);

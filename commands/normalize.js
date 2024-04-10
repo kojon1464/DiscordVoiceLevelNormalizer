@@ -17,6 +17,8 @@ module.exports = {
 		} else {
 			const connectionBeforeJoining = getVoiceConnection(interaction.guildId);
 
+			// TODO handle network problems
+
 			// joins or switches voice channel
 			const connection = joinVoiceChannel({
 				channelId: channel.id,
