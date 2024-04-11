@@ -1,14 +1,12 @@
 const http = require('http');
 const url = require('url');
-
-const host = 'localhost';
-const port = 8000;
+const { httpHost, httPort } = require('./config.json');
 
 
 module.exports = {
 	initializeHttpServer(discordClient) {
 		const server = http.createServer(createResponseHandler(discordClient));
-		server.listen(port, host, () => {
+		server.listen(httPort, httpHost, () => {
 			console.log('[Http] Http server has been initialized!');
 		});
 
